@@ -80,8 +80,6 @@ export const useAuthService = () => {
           credentials: 'include',
         })
         userAuth.accessToken = data.accessToken
-
-        return data.accessToken
       } catch (error) {
         // logout()
         console.log(error)

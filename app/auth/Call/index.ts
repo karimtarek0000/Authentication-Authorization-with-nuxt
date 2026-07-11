@@ -40,17 +40,18 @@ export const useHttp = () => {
 
       // Access token expired
       if (status === 401 || status === 403) {
-        const newToken = await refreshToken()
+        try {
+          await refreshToken()
 
-        if (newToken) {
           const retryResponse = await fetcher.raw(request, {
             ...options,
             headers: {
               ...options?.headers,
-              Authorization: `Bearer ${newToken}`,
             },
           })
           return retryResponse._data
+        } catch (error) {
+          console.log('Error from call status code 401', error)
         }
       }
 
