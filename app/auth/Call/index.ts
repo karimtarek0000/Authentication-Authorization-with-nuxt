@@ -2,8 +2,6 @@ import { useAuthService, userAuth } from '@/auth'
 import type { FetchOptions, FetchRequest } from 'ofetch'
 import { ofetch } from 'ofetch'
 
-const MAXIMUM_RETRY = 3
-
 export const useHttp = () => {
   // -------------------------- BASE DATA --------------------------
   const config = useRuntimeConfig()
@@ -25,9 +23,7 @@ export const useHttp = () => {
     },
 
     // -------------------------- RESPONSE --------------------------
-    onResponse({ response }) {
-      // const res = response._data
-    },
+    onResponse({ response }) {},
   })
 
   // -------------------------- FINAL WRAPPER --------------------------

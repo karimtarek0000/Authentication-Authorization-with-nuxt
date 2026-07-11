@@ -1,15 +1,19 @@
 <script setup lang="ts">
 import { useHttp, userAuth } from '@/auth'
 
-const { data, execute } = await useAsyncData(() => $http('/data'), { immediate: false })
+const { data, execute, error } = await useAsyncData(() => $http('/data'), { immediate: false })
 const { data: products, execute: otherExcute } = await useAsyncData(() => $http('/new-data'), {
   immediate: false,
 })
 
+// const getSomeData = async () => {
+//   await execute()
+//   await otherExcute()
+// }
+
 const getSomeData = async () => {
   try {
-    await execute()
-    // await otherExcute()
+    const data = await $http('/data')
   } catch (error) {}
 }
 
@@ -27,6 +31,7 @@ const getSomeData = async () => {
     {{ userAuth.role }}
     {{ userAuth.isAuth }}
   </pre>
+  <h3>{{ error?.message }}</h3>
 
   <!-- <CanView :status="headingSection">
     <h2>Can view this heading</h2>

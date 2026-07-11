@@ -38,7 +38,7 @@ export const useAuthService = () => {
 
       navigateTo('/')
     } catch (error) {
-      console.log(error)
+      throw error
     }
   }
 
