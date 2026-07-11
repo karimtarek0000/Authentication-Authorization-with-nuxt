@@ -36,7 +36,7 @@ export const useAuthService = () => {
         isAuth: true,
       })
 
-      navigateTo('/')
+      navigateTo('/dashboard')
     } catch (error) {
       throw error
     }

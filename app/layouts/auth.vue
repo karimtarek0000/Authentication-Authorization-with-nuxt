@@ -1,4 +1,4 @@
 <template>
-  <h1>Auth</h1>
+  <h1>Auth Layout Parent</h1>
   <slot />
 </template>

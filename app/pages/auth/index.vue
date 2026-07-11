@@ -19,7 +19,7 @@ const submit = async () => {
 
 <template>
   <main class="page">
-    <h1>Login</h1>
+    <h1>Login Page</h1>
     <form @submit.prevent="submit">
       <label for="email">Email</label>
       <input v-model="email" id="email" type="email" />
