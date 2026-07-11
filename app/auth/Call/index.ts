@@ -38,8 +38,8 @@ export const useHttp = () => {
     } catch (error: any) {
       const status = error.response?.status
 
-      // Access token expired
-      if (status === 401 || status === 403) {
+      // If access token expired will call refresh token for getting a new `accessToken`
+      if (status === 401) {
         try {
           await refreshToken()
 
@@ -57,7 +57,3 @@ export const useHttp = () => {
     }
   }
 }
-
-// if (status === 500 && message?.includes('TokenExpiredError')) {
-//   return logout()
-// }
