@@ -7,12 +7,10 @@ const initialData = {
   role: '',
   isAuth: false,
   hasAuth: '',
-  // hasAuth: localStorage.getItem('hasAuth'),
 }
 
 const resetUserAuth = () => {
   Object.assign(userAuth, initialData)
-  //   localStorage.removeItem('hasAuth')
 }
 
 export const userAuth = reactive<IUserAuth>(initialData)
@@ -60,19 +58,17 @@ export const useAuthService = () => {
   //         isAuth: true,
   //       })
 
-  //       localStorage.setItem('hasAuth', 'true')
-
   //       router.replace('/')
   //     } catch (error) {
   //       throw handleError(error as AxiosError)
   //     }
   //   }
 
-  //   const logout = () => {
-  //     resetUserAuth()
-  //     authChannel.broadcast('logout')
-  //     location.reload()
-  //   }
+  const logout = () => {
+    resetUserAuth()
+    location.reload()
+    // authChannel.broadcast('logout')
+  }
 
   const refreshToken = async () => {
     if (refreshPromise) return refreshPromise
@@ -132,5 +128,5 @@ export const useAuthService = () => {
   //     return restorePromise
   //   }
 
-  return { login, refreshToken }
+  return { login, refreshToken, logout }
 }
