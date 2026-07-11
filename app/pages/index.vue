@@ -9,7 +9,7 @@ const { data: products, execute: otherExcute } = await useAsyncData(() => $http(
 const getSomeData = async () => {
   try {
     await execute()
-    await otherExcute()
+    // await otherExcute()
   } catch (error) {}
 }
 

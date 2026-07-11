@@ -1,5 +1,5 @@
 export const LOGIN = '/auth-test'
-export const REFRESH_TOKEN = '/refresh'
+export const REFRESH_TOKEN = `${import.meta.env.VITE_API_URL}/refresh`
 export const PROFILE = '/me'
 
 export const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID

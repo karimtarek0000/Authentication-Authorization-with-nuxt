@@ -75,8 +75,9 @@ export const useAuthService = () => {
 
     refreshPromise = (async () => {
       try {
-        const data: { accessToken: string } = await $http(REFRESH_TOKEN, {
+        const data: { accessToken: string } = await $fetch(REFRESH_TOKEN, {
           method: 'POST',
+          credentials: 'include',
         })
         userAuth.accessToken = data.accessToken
 
@@ -85,7 +86,7 @@ export const useAuthService = () => {
         // logout()
         console.log(error)
 
-        throw Promise.reject(error)
+        // throw Promise.reject(error)
       } finally {
         refreshPromise = null
       }
