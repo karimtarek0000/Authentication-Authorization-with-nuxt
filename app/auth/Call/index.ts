@@ -1,4 +1,4 @@
-import { useAuthService, userAuth } from '@/auth'
+import { userAuth } from '@/auth'
 import type { FetchOptions, FetchRequest } from 'ofetch'
 import { ofetch } from 'ofetch'
 
@@ -6,7 +6,6 @@ export const useHttp = () => {
   // -------------------------- BASE DATA --------------------------
   const config = useRuntimeConfig()
   const headers = useRequestHeaders(['cookie'])
-  const { refreshToken } = useAuthService()
 
   // -------------------------- CREATE FETCHER --------------------------
   const fetcher = ofetch.create({
@@ -42,7 +41,7 @@ export const useHttp = () => {
 
       // Access token expired
       if (status === 401 || status === 403) {
-        const newToken = await refreshToken()
+        const newToken = await $authService.refreshToken()
 
         if (newToken) {
           options = options || {}

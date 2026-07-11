@@ -1,17 +1,15 @@
 <script setup lang="ts">
-import { useAuthService } from '@/auth'
 import { ref } from 'vue'
-import { RouterLink, useRoute, useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const { replace } = useRouter()
 const { query } = useRoute()
 const email = ref('')
 const password = ref('')
-const { login } = useAuthService()
 
 const submit = async () => {
   try {
-    await login({ email: email.value, password: password.value })
+    await $authService.login({ email: email.value, password: password.value })
     // if (query?.page) {
     //   replace(query?.page as string)
     // }
