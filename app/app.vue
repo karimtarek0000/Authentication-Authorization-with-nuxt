@@ -1,6 +1,16 @@
+<script setup lang="ts">
+const { data, execute } = await useGetProducts()
+
+async function getData() {
+  await execute()
+  console.log(data.value)
+}
+</script>
+
 <template>
-  <div>
+  <NuxtLayout>
     <NuxtRouteAnnouncer />
-    <NuxtWelcome />
-  </div>
+    <NuxtPage />
+    <button @click="getData">click</button>
+  </NuxtLayout>
 </template>
