@@ -50,9 +50,7 @@ export const useHttp = () => {
             },
           })
           return retryResponse._data
-        } catch (error) {
-          console.log('Error from call status code 401', error)
-        }
+        } catch (error) {}
       }
 
       return Promise.reject(error.response?._data || error)

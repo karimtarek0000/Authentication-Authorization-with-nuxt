@@ -81,10 +81,8 @@ export const useAuthService = () => {
         })
         userAuth.accessToken = data.accessToken
       } catch (error) {
-        // logout()
-        console.log(error)
-
-        // throw Promise.reject(error)
+        logout()
+        throw Promise.reject(error)
       } finally {
         refreshPromise = null
       }
