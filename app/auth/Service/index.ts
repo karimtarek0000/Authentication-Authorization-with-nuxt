@@ -1,4 +1,5 @@
-import { LOGIN, REFRESH_TOKEN, useHttp, type IUserAuth, type Login } from '@/auth'
+import { LOGIN, PROFILE, REFRESH_TOKEN, useHttp, type IUserAuth, type Login } from '@/auth'
+import { handleError } from 'vue'
 
 const initialData = {
   accessToken: '',
@@ -6,7 +7,6 @@ const initialData = {
   permissions: [],
   role: '',
   isAuth: false,
-  hasAuth: false,
 }
 
 const resetUserAuth = () => {
@@ -19,6 +19,7 @@ let restorePromise: Promise<null | undefined> | null = null
 let refreshPromise: Promise<undefined | string> | null = null
 
 export const useAuthService = () => {
+  const headers = useRequestHeaders(['cookie'])
   const hasAuth = useCookie('hasAuth')
 
   const login = async ({ email, password }: Login) => {
@@ -83,8 +84,13 @@ export const useAuthService = () => {
         const data: { accessToken: string } = await $fetch(REFRESH_TOKEN, {
           method: 'POST',
           credentials: 'include',
+          headers: {
+            ...headers,
+          },
         })
         userAuth.accessToken = data.accessToken
+
+        return data.accessToken
       } catch (error) {
         // logout()
         throw error
@@ -96,39 +102,43 @@ export const useAuthService = () => {
     return refreshPromise
   }
 
-  //   const restoreUserInfo = async () => {
-  //     try {
-  //       const { data } = await api.get(PROFILE)
+  const restoreUserInfo = async () => {
+    try {
+      const data = await $http(PROFILE)
 
-  //       Object.assign(userAuth, {
-  //         role: data.role,
-  //         userInfo: { id: data.id, name: data.name, email: data.email },
-  //         permissions: data.permissions,
-  //         isAuth: true,
-  //       })
-  //     } catch (error) {
-  //       logout()
-  //       throw handleError(error as AxiosError)
-  //     }
-  //   }
+      Object.assign(userAuth, {
+        role: data.role,
+        userInfo: { id: data.id, name: data.name, email: data.email },
+        permissions: data.permissions,
+        isAuth: true,
+      })
+    } catch (error) {
+      // logout()
+      // throw error
+    }
+  }
 
-  //   const restoreSession = async () => {
-  //     if (!userAuth.hasAuth) return null
+  const restoreSession = async () => {
+    if (userAuth.isAuth || !hasAuth.value) return
 
-  //     if (restorePromise) return restorePromise
+    if (restorePromise) return restorePromise
 
-  //     restorePromise = (async () => {
-  //       try {
-  //         const token = await refreshToken()
+    restorePromise = (async () => {
+      try {
+        const token = await refreshToken()
 
-  //         if (!token) return null
+        if (!token) return null
 
-  //         await restoreUserInfo()
-  //       } catch {}
-  //     })()
+        await restoreUserInfo()
 
-  //     return restorePromise
-  //   }
+        return true
+      } catch (error) {
+        console.error('[auth] restoreSession failed', error)
+      }
+    })()
 
-  return { login, refreshToken, logout }
+    return restorePromise
+  }
+
+  return { login, refreshToken, restoreSession, logout }
 }
