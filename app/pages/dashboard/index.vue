@@ -6,15 +6,13 @@ const { data: products, execute: otherExcute } = await useAsyncData(() => $http(
   immediate: false,
 })
 
-// const getSomeData = async () => {
-//   await execute()
-//   await otherExcute()
-// }
-
 const getSomeData = async () => {
-  try {
-    const data = await $http('/data')
-  } catch (error) {}
+  await execute()
+  await otherExcute()
+}
+
+const logout = () => {
+  $authService.logout()
 }
 
 // const paragraphSection = $checkPermissions({ permission: 'edit_testing' })
@@ -36,6 +34,7 @@ const getSomeData = async () => {
       {{ userAuth.isAuth }}
     </pre>
   </ClientOnly>
+
   <!-- <h3>{{ error?.message }}</h3> -->
 
   <!-- <CanView :status="headingSection">
@@ -59,5 +58,5 @@ const getSomeData = async () => {
   <!-- <RouterLink :to="{ name: 'test' }">Go to test page</RouterLink> -->
   <RouterLink to="/auth">Go to login</RouterLink>
   <button @click="getSomeData">Get the data</button>
-  <!-- <button @click="logout">logout</button> -->
+  <button @click="logout">logout</button>
 </template>
