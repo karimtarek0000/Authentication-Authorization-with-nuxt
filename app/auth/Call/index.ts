@@ -2,6 +2,16 @@ import { useAuthService, userAuth } from '@/auth'
 import type { FetchOptions, FetchRequest } from 'ofetch'
 import { ofetch } from 'ofetch'
 
+// -------------------------- ABORT CONTROLLER --------------------------
+let controller = new AbortController()
+
+export const abortPendingRequests = () => {
+  controller.abort()
+  controller = new AbortController()
+}
+
+export const getAbortSignal = () => controller.signal
+
 export const useHttp = () => {
   // -------------------------- BASE DATA --------------------------
   const config = useRuntimeConfig()
@@ -29,7 +39,10 @@ export const useHttp = () => {
   // -------------------------- FINAL WRAPPER --------------------------
   return async (request: FetchRequest, options?: FetchOptions) => {
     try {
-      const response = await fetcher.raw(request, options)
+      const response = await fetcher.raw(request, {
+        ...options,
+        signal: options?.signal ?? controller.signal,
+      })
       return response._data
     } catch (error: any) {
       const status = error.response?.status
@@ -44,6 +57,7 @@ export const useHttp = () => {
             headers: {
               ...options?.headers,
             },
+            signal: options?.signal ?? controller.signal,
           })
           return retryResponse._data
         } catch (error) {}

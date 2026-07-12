@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import { useHttp, userAuth } from '@/auth'
+import { getAbortSignal, userAuth } from '@/auth'
 
+// const { data, execute, error } = await useAsyncData(
+//   (_nuxtApp, { signal }) => $http('/data', { signal }),
+//   { immediate: false },
+// )
 const { data, execute, error } = await useAsyncData(() => $http('/data'), { immediate: false })
 const { data: products, execute: otherExcute } = await useAsyncData(() => $http('/new-data'), {
   immediate: false,
@@ -55,7 +59,10 @@ const logout = () => {
     </p>
   </CanView> -->
 
-  <!-- <RouterLink :to="{ name: 'test' }">Go to test page</RouterLink> -->
+  <RouterLink to="/dashboard/about">Go to test page</RouterLink>
+  <br />
+  <br />
+  <br />
   <RouterLink to="/auth">Go to login</RouterLink>
   <button @click="getSomeData">Get the data</button>
   <button @click="logout">logout</button>

@@ -1,4 +1,10 @@
+import { abortPendingRequests } from '@/auth'
+
 export default defineNuxtRouteMiddleware(async to => {
+  if (import.meta.client) {
+    abortPendingRequests()
+  }
+
   const isAuth = await $authService.restoreSession()
 
   if (to.meta.layout === 'dashboard' && !isAuth) {
