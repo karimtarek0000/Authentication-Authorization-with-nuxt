@@ -12,6 +12,7 @@ export const abortPendingRequests = () => {
 
 export const getAbortSignal = () => controller.signal
 
+// -------------------------- HTTP --------------------------
 export const useHttp = () => {
   // -------------------------- BASE DATA --------------------------
   const config = useRuntimeConfig()
