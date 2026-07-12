@@ -19,6 +19,8 @@ let restorePromise: Promise<null | undefined> | null = null
 let refreshPromise: Promise<undefined | string> | null = null
 
 export const useAuthService = () => {
+  const hasAuth = useCookie('hasAuth')
+
   const login = async ({ email, password }: Login) => {
     try {
       const data: any = await $http(LOGIN, {
@@ -35,6 +37,8 @@ export const useAuthService = () => {
         permissions: info.permissions,
         isAuth: true,
       })
+
+      hasAuth.value = JSON.stringify(true)
 
       navigateTo('/dashboard')
     } catch (error) {
@@ -66,6 +70,7 @@ export const useAuthService = () => {
 
   const logout = () => {
     resetUserAuth()
+    hasAuth.value = ''
     location.reload()
     // authChannel.broadcast('logout')
   }
