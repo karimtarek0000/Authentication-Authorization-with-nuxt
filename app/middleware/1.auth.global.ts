@@ -1,4 +1,4 @@
-import { useAuthService, userAuth } from '@/auth'
+import { useAuthService } from '@/auth'
 
 export default defineNuxtRouteMiddleware(async to => {
   const { restoreSession } = useAuthService()
