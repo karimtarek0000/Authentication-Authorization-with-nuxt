@@ -6,7 +6,7 @@ const initialData = {
   permissions: [],
   role: '',
   isAuth: false,
-  hasAuth: '',
+  hasAuth: false,
 }
 
 const resetUserAuth = () => {

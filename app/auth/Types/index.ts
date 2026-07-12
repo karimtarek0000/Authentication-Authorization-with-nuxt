@@ -12,6 +12,7 @@ export interface IUserAuth {
   permissions: Permission[]
   role: string
   isAuth: boolean
+  hasAuth: boolean
 }
 
 export type OAuthProvider = 'google' | 'github'
