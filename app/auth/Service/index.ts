@@ -13,10 +13,10 @@ const resetUserAuth = () => {
   Object.assign(userAuth, initialData)
 }
 
-export const userAuth = reactive<IUserAuth>(initialData)
-
 let restorePromise: Promise<boolean | null | undefined> | null = null
 let refreshPromise: Promise<undefined | string> | null = null
+
+export const userAuth = reactive<IUserAuth>(initialData)
 
 export const useAuthService = () => {
   const headers = useRequestHeaders(['cookie'])
@@ -113,8 +113,8 @@ export const useAuthService = () => {
         isAuth: true,
       })
     } catch (error) {
-      // logout()
-      // throw error
+      logout()
+      throw error
     }
   }
 
@@ -135,7 +135,7 @@ export const useAuthService = () => {
 
         return true
       } catch (error) {
-        console.error('[auth] restoreSession failed', error)
+        throw error
       }
     })()
 
