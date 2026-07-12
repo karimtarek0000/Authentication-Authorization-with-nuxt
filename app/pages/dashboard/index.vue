@@ -24,14 +24,19 @@ const getSomeData = async () => {
 </script>
 
 <template>
-  <pre>
-    {{ userAuth.accessToken }}
-    {{ userAuth.userInfo }}
-    {{ userAuth.permissions }}
-    {{ userAuth.role }}
-    {{ userAuth.isAuth }}
-  </pre>
-  <h3>{{ error?.message }}</h3>
+  <ClientOnly>
+    <template #fallback>
+      <h1>Loading...</h1>
+    </template>
+    <pre>
+      {{ userAuth.accessToken }}
+      {{ userAuth.userInfo }}
+      {{ userAuth.permissions }}
+      {{ userAuth.role }}
+      {{ userAuth.isAuth }}
+    </pre>
+  </ClientOnly>
+  <!-- <h3>{{ error?.message }}</h3> -->
 
   <!-- <CanView :status="headingSection">
     <h2>Can view this heading</h2>

@@ -1,14 +1,16 @@
-import { userAuth } from '@/auth'
+import { useAuthService, userAuth } from '@/auth'
 
-export default defineNuxtRouteMiddleware(to => {
-  // const hasAuth = useCookie('hasAuth')
-  // console.log(hasAuth.value)
+export default defineNuxtRouteMiddleware(async to => {
+  const { restoreSession } = useAuthService()
+  await restoreSession()
 
-  if (to.meta.layout === 'dashboard' && !userAuth.accessToken) {
+  const isAuth = userAuth.isAuth
+
+  if (to.meta.layout === 'dashboard' && !isAuth) {
     return navigateTo('/auth')
   }
 
-  if (to.meta.layout === 'auth' && userAuth.accessToken) {
+  if (to.meta.layout === 'auth' && isAuth) {
     return navigateTo('/dashboard')
   }
 })
