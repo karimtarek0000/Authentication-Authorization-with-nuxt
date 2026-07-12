@@ -2,9 +2,7 @@ import { useAuthService, userAuth } from '@/auth'
 
 export default defineNuxtRouteMiddleware(async to => {
   const { restoreSession } = useAuthService()
-  await restoreSession()
-
-  const isAuth = userAuth.isAuth
+  const isAuth = await restoreSession()
 
   if (to.meta.layout === 'dashboard' && !isAuth) {
     return navigateTo('/auth')

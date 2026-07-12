@@ -15,7 +15,7 @@ const resetUserAuth = () => {
 
 export const userAuth = reactive<IUserAuth>(initialData)
 
-let restorePromise: Promise<null | undefined> | null = null
+let restorePromise: Promise<boolean | null | undefined> | null = null
 let refreshPromise: Promise<undefined | string> | null = null
 
 export const useAuthService = () => {
@@ -92,7 +92,7 @@ export const useAuthService = () => {
 
         return data.accessToken
       } catch (error) {
-        // logout()
+        logout()
         throw error
       } finally {
         refreshPromise = null
@@ -119,7 +119,9 @@ export const useAuthService = () => {
   }
 
   const restoreSession = async () => {
-    if (userAuth.isAuth || !hasAuth.value) return
+    if (!hasAuth.value) return false
+
+    if (userAuth.isAuth) return userAuth.isAuth
 
     if (restorePromise) return restorePromise
 
