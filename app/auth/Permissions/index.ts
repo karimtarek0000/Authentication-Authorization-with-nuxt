@@ -32,6 +32,10 @@ const checkPermissions = (
 }
 
 // You can now use this utility for `Check Permissions`
-export const $checkPermissions = (permissionRequirement: PermissionRequirement) => {
-  return checkPermissions(userAuth.permissions, permissionRequirement)
+export const $checkPermissions = (
+  permissionRequirement: PermissionRequirement,
+  userPermissions?: Permission[],
+) => {
+  const permissions = userAuth.permissions ?? userPermissions
+  return checkPermissions(permissions, permissionRequirement)
 }
