@@ -1,19 +1,10 @@
-import {
-  $checkPermissions,
-  checkPermissions,
-  userAuth,
-  type Permission,
-  type PermissionRequirement,
-} from '@/auth'
-import { defineNuxtRouteMiddleware, navigateTo } from 'nuxt/app'
+import { $checkPermissions, userAuth, type PermissionRequirement } from '@/auth'
 
 export default defineNuxtRouteMiddleware(to => {
   const hasPermissions = $checkPermissions(
     to.meta.permissions as PermissionRequirement,
     userAuth.permissions,
   )
-
-  console.log(hasPermissions)
 
   if (!hasPermissions) {
     return navigateTo('/dashboard')
