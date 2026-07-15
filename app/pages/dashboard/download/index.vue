@@ -4,7 +4,7 @@ import type { PermissionRequirement } from '@/auth'
 definePageMeta({
   middleware: 'permissions',
   permissions: {
-    permission: 'edit_testing',
+    anyOf: ['edit_profile', 'edit_testing'],
   } as PermissionRequirement,
 })
 </script>

@@ -36,6 +36,6 @@ export const $checkPermissions = (
   permissionRequirement: PermissionRequirement,
   userPermissions?: Permission[],
 ) => {
-  const permissions = userAuth.permissions ?? userPermissions
+  const permissions = userPermissions ?? userAuth.permissions
   return checkPermissions(permissions, permissionRequirement)
 }
