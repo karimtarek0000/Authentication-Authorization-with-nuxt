@@ -66,4 +66,5 @@ const logout = () => {
   <RouterLink to="/auth">Go to login</RouterLink>
   <button @click="getSomeData">Get the data</button>
   <button @click="logout">logout</button>
+  <RouterLink to="/dashboard/download">Go to download page</RouterLink>
 </template>
