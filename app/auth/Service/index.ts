@@ -1,4 +1,4 @@
-import { LOGIN, PROFILE, REFRESH_TOKEN, useHttp, type IUserAuth, type Login } from '@/auth'
+import { LOGIN, PAGES, PROFILE, REFRESH_TOKEN, useHttp, type IUserAuth, type Login } from '@/auth'
 import { handleError } from 'vue'
 
 const initialData = {
@@ -39,7 +39,7 @@ export const useAuthService = () => {
 
       hasAuth.value = JSON.stringify(true)
 
-      navigateTo('/dashboard')
+      navigateTo(PAGES.DASHBOARD)
     } catch (error) {
       throw error
     }

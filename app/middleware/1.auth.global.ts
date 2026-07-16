@@ -1,4 +1,4 @@
-import { abortPendingRequests } from '@/auth'
+import { abortPendingRequests, LAYOUT, PAGES } from '@/auth'
 
 export default defineNuxtRouteMiddleware(async to => {
   if (import.meta.client) {
@@ -7,11 +7,11 @@ export default defineNuxtRouteMiddleware(async to => {
 
   const isAuth = await $authService.restoreSession()
 
-  if (to.meta.layout === 'dashboard' && !isAuth) {
-    return navigateTo('/auth')
+  if (to.meta.layout === LAYOUT.DASHBOARD && !isAuth) {
+    return navigateTo(PAGES.AUTH)
   }
 
-  if (to.meta.layout === 'auth' && isAuth) {
-    return navigateTo('/dashboard')
+  if (to.meta.layout === LAYOUT.AUTH && isAuth) {
+    return navigateTo(PAGES.DASHBOARD)
   }
 })
