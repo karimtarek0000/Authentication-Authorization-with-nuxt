@@ -1,5 +1,8 @@
 export * from './Call'
 export * from './Config'
+export * from './Permissions'
 export * from './Service'
 export * from './Types'
-export * from './Permissions'
+import CanView from './Components/CanView.vue'
+
+export { CanView }
