@@ -3,9 +3,9 @@ import type { PermissionRequirement } from '@/auth'
 
 definePageMeta({
   middleware: 'permissions',
-  // permissions: {
-  //   anyOf: ['edit_profile', 'edit_testing'],
-  // } as PermissionRequirement,
+  permissions: {
+    permission: 'manage_users',
+  } as PermissionRequirement,
 })
 
 const { data, execute, error } = await useAsyncData(() => $http('/data'), { immediate: false })
