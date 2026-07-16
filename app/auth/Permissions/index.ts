@@ -1,4 +1,4 @@
-import { userAuth, type Permission, type PermissionRequirement } from '@/auth'
+import { type Permission, type PermissionRequirement } from '@/auth'
 
 // Check if user has a specific permission
 function $hasPermission(userPermissions: Permission[], required: Permission): boolean {
@@ -36,6 +36,6 @@ export const $checkPermissions = (
   permissionRequirement: PermissionRequirement,
   userPermissions?: Permission[],
 ) => {
-  const permissions = userPermissions ?? userAuth.permissions
+  const permissions = userPermissions ?? $authService.userAuth.permissions
   return checkPermissions(permissions, permissionRequirement)
 }

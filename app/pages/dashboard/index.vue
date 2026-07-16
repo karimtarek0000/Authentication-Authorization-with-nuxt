@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { getAbortSignal, userAuth } from '@/auth'
-
 // const { data, execute, error } = await useAsyncData(
 //   (_nuxtApp, { signal }) => $http('/data', { signal }),
 //   { immediate: false },
@@ -23,6 +21,8 @@ const logout = () => {
 // const headingSection = $checkPermissions({
 //   allOf: ['edit_profile', 'manage_users'],
 // })
+
+const userData = $authService.userAuth
 </script>
 
 <template>
@@ -31,11 +31,15 @@ const logout = () => {
       <h1>Loading...</h1>
     </template>
     <pre>
-      {{ userAuth.accessToken }}
+      {{ userData.accessToken }}
+      {{ userData.userInfo }}
+      {{ userData.permissions }}
+      {{ userData.role }}
+      <!-- {{ userAuth.accessToken }}
       {{ userAuth.userInfo }}
       {{ userAuth.permissions }}
       {{ userAuth.role }}
-      {{ userAuth.isAuth }}
+      {{ userAuth.isAuth }} -->
     </pre>
   </ClientOnly>
 

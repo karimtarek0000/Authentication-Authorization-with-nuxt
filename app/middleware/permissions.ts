@@ -1,9 +1,9 @@
-import { $checkPermissions, userAuth, type PermissionRequirement } from '@/auth'
+import { $checkPermissions, type PermissionRequirement } from '@/auth'
 
 export default defineNuxtRouteMiddleware(to => {
   const hasPermissions = $checkPermissions(
     to.meta.permissions as PermissionRequirement,
-    userAuth.permissions,
+    $authService.userAuth.permissions,
   )
 
   if (!hasPermissions) {

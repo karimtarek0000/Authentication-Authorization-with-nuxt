@@ -6,21 +6,18 @@ const initialData = {
   userInfo: { id: '', name: '', email: '' },
   permissions: [],
   role: '',
-  isAuth: false,
-}
-
-const resetUserAuth = () => {
-  Object.assign(userAuth, initialData)
 }
 
 let restorePromise: Promise<boolean | null | undefined> | null = null
 let refreshPromise: Promise<undefined | string> | null = null
 
-export const userAuth = reactive<IUserAuth>(initialData)
-
 export const useAuthService = () => {
   const headers = useRequestHeaders(['cookie'])
   const hasAuth = useCookie('hasAuth')
+
+  const _userAuth = useState<IUserAuth>('userAuth', () => initialData)
+  const userAuth = _userAuth.value
+  const isAuth = ref(false)
 
   const login = async ({ email, password }: Login) => {
     try {
@@ -36,8 +33,9 @@ export const useAuthService = () => {
         role: info.role,
         userInfo: { id, name, email },
         permissions: info.permissions,
-        isAuth: true,
       })
+
+      isAuth.value = true
 
       hasAuth.value = JSON.stringify(true)
 
@@ -47,30 +45,8 @@ export const useAuthService = () => {
     }
   }
 
-  //   const loginWithOAuth = async (provider: OAuthProvider, code: string) => {
-  //     try {
-  //       const endpoint = provider === 'google' ? OAUTH_GOOGLE : OAUTH_GITHUB
-
-  //       const {
-  //         data: { id, name, email, ...info },
-  //       } = await api.post(endpoint, { code, redirectURL: getOAuthRedirectURL(provider) })
-
-  //       Object.assign(userAuth, {
-  //         accessToken: info.accessToken,
-  //         role: info.role,
-  //         userInfo: { id, name, email },
-  //         permissions: info.permissions,
-  //         isAuth: true,
-  //       })
-
-  //       router.replace('/')
-  //     } catch (error) {
-  //       throw handleError(error as AxiosError)
-  //     }
-  //   }
-
   const logout = () => {
-    resetUserAuth()
+    Object.assign(userAuth, initialData)
     hasAuth.value = ''
     location.reload()
     // authChannel.broadcast('logout')
@@ -110,8 +86,9 @@ export const useAuthService = () => {
         role: data.role,
         userInfo: { id: data.id, name: data.name, email: data.email },
         permissions: data.permissions,
-        isAuth: true,
       })
+
+      isAuth.value = true
     } catch (error) {
       logout()
       throw error
@@ -121,7 +98,7 @@ export const useAuthService = () => {
   const restoreSession = async () => {
     if (!hasAuth.value) return false
 
-    if (userAuth.isAuth) return userAuth.isAuth
+    if (isAuth.value) return isAuth.value
 
     if (restorePromise) return restorePromise
 
@@ -142,5 +119,5 @@ export const useAuthService = () => {
     return restorePromise
   }
 
-  return { login, refreshToken, restoreSession, logout }
+  return { login, refreshToken, restoreSession, userAuth, isAuth, logout }
 }

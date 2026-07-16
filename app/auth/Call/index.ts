@@ -1,4 +1,3 @@
-import { userAuth } from '@/auth'
 import type { FetchOptions, FetchRequest } from 'ofetch'
 import { ofetch } from 'ofetch'
 
@@ -27,8 +26,8 @@ export const useHttp = () => {
 
     // -------------------------- REQUEST --------------------------
     onRequest({ options }) {
-      if (userAuth.accessToken) {
-        options.headers.set('Authorization', `Bearer ${userAuth.accessToken}`)
+      if ($authService.userAuth.accessToken) {
+        options.headers.set('Authorization', `Bearer ${$authService.userAuth.accessToken}`)
       }
     },
 

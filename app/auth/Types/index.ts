@@ -11,7 +11,6 @@ export interface IUserAuth {
   userInfo: { id: string; name: string; email: string }
   permissions: Permission[]
   role: string
-  isAuth: boolean
 }
 
 export type OAuthProvider = 'google' | 'github'
