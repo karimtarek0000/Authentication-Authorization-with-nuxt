@@ -3,6 +3,7 @@ export * from './Config'
 export * from './Idle'
 export * from './Permissions'
 export * from './Service'
+export * from './Sync'
 export * from './Types'
 import CanView from './Components/CanView.vue'
 

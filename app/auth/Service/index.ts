@@ -1,4 +1,13 @@
-import { LOGIN, PAGES, PROFILE, REFRESH_TOKEN, useIdle, type IUserAuth, type Login } from '@/auth'
+import {
+  authChannel,
+  LOGIN,
+  PAGES,
+  PROFILE,
+  REFRESH_TOKEN,
+  useIdle,
+  type IUserAuth,
+  type Login,
+} from '@/auth'
 
 const initialData = {
   accessToken: '',
@@ -49,7 +58,7 @@ export const useAuthService = () => {
     Object.assign(userAuth, initialData)
     hasAuth.value = ''
     location.reload()
-    // authChannel.broadcast('logout')
+    authChannel.broadcast('logout')
   }
 
   const refreshToken = async () => {
