@@ -1,6 +1,7 @@
 export * from './Call'
 export * from './Config'
 export * from './Idle'
+export * from './OAuth'
 export * from './Permissions'
 export * from './Service'
 export * from './Sync'

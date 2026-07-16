@@ -1,12 +1,16 @@
 import {
   authChannel,
+  getOAuthRedirectURL,
   LOGIN,
+  OAUTH_GITHUB,
+  OAUTH_GOOGLE,
   PAGES,
   PROFILE,
   REFRESH_TOKEN,
   useIdle,
   type IUserAuth,
   type Login,
+  type OAuthProvider,
 } from '@/auth'
 
 const initialData = {
@@ -35,23 +39,41 @@ export const useAuthService = () => {
         body: { email, password },
       })
 
-      const { id, name, ...info } = data
-
-      Object.assign(userAuth, {
-        accessToken: info.accessToken,
-        role: info.role,
-        userInfo: { id, name, email },
-        permissions: info.permissions,
-      })
-
-      isAuth.value = true
-
-      hasAuth.value = JSON.stringify(true)
-
-      navigateTo(PAGES.DASHBOARD)
+      setAuthData(data)
     } catch (error) {
       throw error
     }
+  }
+
+  const loginWithOAuth = async (provider: OAuthProvider, code: string) => {
+    try {
+      const endpoint = provider === 'google' ? OAUTH_GOOGLE : OAUTH_GITHUB
+
+      const data = await $http(endpoint, {
+        body: { code, redirectURL: getOAuthRedirectURL(provider) },
+      })
+
+      setAuthData(data)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  const setAuthData = (data: any) => {
+    const { id, name, email, ...info } = data
+
+    Object.assign(userAuth, {
+      accessToken: info.accessToken,
+      role: info.role,
+      userInfo: { id, name, email },
+      permissions: info.permissions,
+    })
+
+    isAuth.value = true
+
+    hasAuth.value = JSON.stringify(true)
+
+    navigateTo(PAGES.DASHBOARD)
   }
 
   const logout = () => {
@@ -133,5 +155,5 @@ export const useAuthService = () => {
     () => setIdle(),
   )
 
-  return { login, refreshToken, restoreSession, userAuth, isAuth, logout }
+  return { login, loginWithOAuth, refreshToken, restoreSession, userAuth, isAuth, logout }
 }
