@@ -1,5 +1,4 @@
-import { LOGIN, PAGES, PROFILE, REFRESH_TOKEN, useHttp, type IUserAuth, type Login } from '@/auth'
-import { handleError } from 'vue'
+import { LOGIN, PAGES, PROFILE, REFRESH_TOKEN, useIdle, type IUserAuth, type Login } from '@/auth'
 
 const initialData = {
   accessToken: '',
@@ -14,10 +13,11 @@ let refreshPromise: Promise<undefined | string> | null = null
 export const useAuthService = () => {
   const headers = useRequestHeaders(['cookie'])
   const hasAuth = useCookie('hasAuth')
-
   const _userAuth = useState<IUserAuth>('userAuth', () => initialData)
-  const userAuth = _userAuth.value
+  const { setIdle } = useIdle()
   const isAuth = ref(false)
+
+  const userAuth = _userAuth.value
 
   const login = async ({ email, password }: Login) => {
     try {
@@ -118,6 +118,11 @@ export const useAuthService = () => {
 
     return restorePromise
   }
+
+  watch(
+    () => isAuth.value,
+    () => setIdle(),
+  )
 
   return { login, refreshToken, restoreSession, userAuth, isAuth, logout }
 }
