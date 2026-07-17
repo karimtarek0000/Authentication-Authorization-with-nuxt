@@ -8,7 +8,7 @@ export default defineNuxtRouteMiddleware(async to => {
   const isAuth = await $authService.restoreSession()
 
   if (to.meta.layout === LAYOUT.DASHBOARD && !isAuth) {
-    return navigateTo(PAGES.AUTH)
+    return navigateTo(`${PAGES.AUTH}?page=${to.path}`)
   }
 
   if (to.meta.layout === LAYOUT.AUTH && isAuth) {

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { startGithubLogin, startGoogleLogin } from '@/auth'
 
-const { replace } = useRouter()
 const { query } = useRoute()
 const email = ref('')
 const password = ref('')
@@ -11,7 +10,7 @@ const submit = async () => {
     await $authService.login({ email: email.value, password: password.value })
 
     if (query?.page) {
-      replace(query?.page as string)
+      navigateTo(query?.page as string)
     }
   } catch (error) {}
 }
