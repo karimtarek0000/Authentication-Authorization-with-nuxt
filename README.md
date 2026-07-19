@@ -1,4 +1,4 @@
-# Authentication & Authorization in Nuxt
+# Authentication & Authorization Flow in Nuxt
 
 A Nuxt 4 sandbox app demonstrating a complete, framework-agnostic-style authentication
 layer: email/password login, OAuth (Google/GitHub), silent token refresh, idle-timeout
