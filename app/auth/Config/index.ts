@@ -1,8 +1,10 @@
 export const LOGIN = '/auth-test'
 export const REFRESH_TOKEN = `${import.meta.env.VITE_API_URL}/refresh`
 export const PROFILE = '/me'
-export const OAUTH_GOOGLE = '/auth/google'
-export const OAUTH_GITHUB = '/auth/github'
+export const OAUTH_PLATFORM = {
+  google: '/auth/google',
+  github: '/auth/github',
+} as const
 
 export const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID
 export const GITHUB_CLIENT_ID = import.meta.env.VITE_GITHUB_CLIENT_ID

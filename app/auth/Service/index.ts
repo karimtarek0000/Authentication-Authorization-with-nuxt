@@ -2,8 +2,7 @@ import {
   authChannel,
   getOAuthRedirectURL,
   LOGIN,
-  OAUTH_GITHUB,
-  OAUTH_GOOGLE,
+  OAUTH_PLATFORM,
   PAGES,
   PROFILE,
   REFRESH_TOKEN,
@@ -47,7 +46,7 @@ export const useAuthService = () => {
 
   const loginWithOAuth = async (provider: OAuthProvider, code: string) => {
     try {
-      const endpoint = provider === 'google' ? OAUTH_GOOGLE : OAUTH_GITHUB
+      const endpoint = OAUTH_PLATFORM[provider]
 
       const data = await $http(endpoint, {
         body: { code, redirectURL: getOAuthRedirectURL(provider) },
