@@ -1,17 +1,17 @@
 import { type Permission, type PermissionRequirement } from '@/auth'
 
 // Check if user has a specific permission
-function $hasPermission(userPermissions: Permission[], required: Permission): boolean {
+function $hasPermission(userPermissions: Permission[], permissionsRequired: Permission): boolean {
   return userPermissions.includes(required)
 }
 
 // Check if user has ANY of the given permissions
-function $hasAnyPermission(userPermissions: Permission[], required: Permission[]): boolean {
+function $hasAnyPermission(userPermissions: Permission[], permissionsRequired: Permission[]): boolean {
   return required.some(p => userPermissions.includes(p))
 }
 
 // Check if user has ALL of the given permissions
-function $hasAllPermissions(userPermissions: Permission[], required: Permission[]): boolean {
+function $hasAllPermissions(userPermissions: Permission[], permissionsRequired: Permission[]): boolean {
   return required.every(p => userPermissions.includes(p))
 }
 
