@@ -59,7 +59,9 @@ export const useHttp = () => {
             signal: options?.signal ?? controller.signal,
           })
           return retryResponse._data
-        } catch (error) {}
+        } catch (error) {
+          return Promise.reject(error.response?._data || error)
+        }
       }
 
       return Promise.reject(error.response?._data || error)
