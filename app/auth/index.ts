@@ -6,6 +6,4 @@ export * from './Permissions'
 export * from './Service'
 export * from './Sync'
 export * from './Types'
-import CanView from './Components/CanView.vue'
-
-export { CanView }
+export {default as CanView} from './Components/CanView.vue'
